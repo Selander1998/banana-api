@@ -31,6 +31,6 @@ export class WillysBananaResponse {
   }
 
   private isValidBananaName(name: string) {
-    return name.toLowerCase().includes('banan');
+    return name.toLowerCase().includes('banan ');
   }
 }
