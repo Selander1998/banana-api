@@ -6,25 +6,15 @@ import { WillysResponse, WillysBananaResponse } from 'src/stores/willys/types';
 
 @Injectable()
 export class BananaService {
-  public async getAllBananas() {
+  public async getAllBananas(cheapest: boolean) {
     const hemkopBananas = await this.getHemkopBananas();
-
     const willysBananas = await this.getWillysBananas();
-    console.log(
-      '🚀 ~ BananaService ~ getAllBananas ~ willysBananas:',
-      willysBananas,
-    );
 
-    const bananas = [hemkopBananas, willysBananas].flatMap(
-      (storeData) => storeData.data,
-    );
+    const bananas = [hemkopBananas, willysBananas].flatMap((s) => s.data);
 
     const bananasSorted = bananas.sort((a, b) => a.price - b.price);
 
-    const cheapestBanana = bananasSorted[0];
-    console.log('🚀 ~ BananaService ~ cheapestBanana:', cheapestBanana);
-
-    return bananasSorted;
+    return (cheapest && bananasSorted[0]) || bananasSorted;
   }
 
   private async getHemkopBananas() {

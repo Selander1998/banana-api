@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 import { BananaService } from './banana.service';
 
 @Controller('/bananas')
@@ -10,7 +10,9 @@ export class BananaController {
   }
 
   @Get()
-  public async getAllBananas() {
-    return await this.bananaService.getAllBananas();
+  public async getAllBananas(@Req() request: Request) {
+    const cheap = request.body['cheapest'] && request.body['cheapest'] === true;
+
+    return await this.bananaService.getAllBananas(cheap);
   }
 }
